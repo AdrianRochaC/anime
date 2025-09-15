@@ -12,16 +12,14 @@ class User(db.Model, UserMixin):
 
     animes_favoritos = db.relationship(
         'FavoriteAnime',
-        backref='usuario',
-        lazy=True,
-        overlaps="user,favoritos"
+        back_populates='usuario',
+        lazy=True
     )
 
     posts = db.relationship(
         'Post',
-        backref='usuario',
-        lazy=True,
-        overlaps="user,posts"
+        back_populates='usuario',
+        lazy=True
     )
 
     def get_id(self):
@@ -37,8 +35,7 @@ class FavoriteAnime(db.Model):
 
     usuario = db.relationship(
         'User',
-        backref='animes_favoritos',
-        overlaps="user,favoritos"
+        back_populates='animes_favoritos'
     )
 
 
@@ -50,6 +47,5 @@ class Post(db.Model):
 
     usuario = db.relationship(
         'User',
-        backref='posts',
-        overlaps="user,posts"
+        back_populates='posts'
     )
