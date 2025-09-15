@@ -37,6 +37,14 @@ from flask_login import current_user
 def home():
     return render_template("home.html", user=current_user)
 
+@app.route("/init/<clave>")
+def init_db(clave):
+    if clave != "tu_clave_secreta":
+        return "⛔ Clave incorrecta", 403
+    db.create_all()
+    return "✅ Base de datos creada correctamente."
+
+
 @app.route("/profile", methods=["GET", "POST"])
 @login_required
 def profile():
