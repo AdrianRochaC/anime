@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inicio - Portal Otaku</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>🌸 Bienvenido al Portal Social Otaku</header>
+
+    <nav>
+        {% if user.is_authenticated %}
+            <a href="{{ url_for('profile') }}">Perfil</a>
+            <a href="{{ url_for('feed') }}">Muro</a>
+            <a href="{{ url_for('auth.logout') }}">Cerrar sesión</a>
+        {% else %}
+            <a href="{{ url_for('auth.login') }}">Iniciar sesión</a>
+            <a href="{{ url_for('auth.signup') }}">Registrarse</a>
+        {% endif %}
+    </nav>
+
+    <div class="container">
+        {% if user.is_authenticated %}
+            <h2>👋 ¡Hola, {{ user.username }}!</h2>
+            <p>Explora tus favoritos, publica en el muro o busca nuevos animes.</p>
+        {% else %}
+            <h2>🎌 Únete a la comunidad otaku</h2>
+            <p>Regístrate para guardar tus animes favoritos, compartir reseñas y conectarte con otros fans.</p>
+            <a href="{{ url_for('auth.signup') }}"><button>Registrarse</button></a>
+            <a href="{{ url_for('auth.login') }}"><button>Iniciar sesión</button></a>
+        {% endif %}
+    </div>
+</body>
+</html>

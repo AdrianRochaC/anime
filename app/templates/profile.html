@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Perfil de {{ user.username }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <header>🌸 Portal Social Otaku</header>
+    <nav>
+        <a href="{{ url_for('home') }}">Inicio</a>
+        <a href="{{ url_for('profile') }}">Perfil</a>
+        <a href="{{ url_for('feed') }}">Muro</a>
+        <a href="{{ url_for('auth.logout') }}">Cerrar sesión</a>
+    </nav>
+    <div class="container">
+        <div style="text-align:center;">
+            <img src="{{ user.avatar_url }}" class="avatar" style="width:100px;"><br>
+            <h2>👤 Perfil de {{ user.username }}</h2>
+        </div>
+        <p>¡Bienvenido al portal social de anime!</p>
+
+        <!-- 🔍 Aquí va el bloque que me compartiste -->
+        <h3>🔍 Buscar anime</h3>
+        <form method="POST">
+            <input type="text" name="anime" placeholder="Nombre del anime" required>
+            <button type="submit">Buscar</button>
+        </form>
+
+        {% if resultado %}
+        <form method="POST" action="/add_favorite">
+            <input type="hidden" name="titulo" value="{{ resultado.titulo }}">
+            <input type="hidden" name="imagen" value="{{ resultado.imagen }}">
+            <textarea name="reseña" placeholder="¿Qué opinas de este anime?" rows="3" cols="40"></textarea><br>
+            <button type="submit">💖 Agregar a favoritos</button>
+        </form>
+
+
+        <h3>🎬 Resultado</h3>
+        <img src="{{ resultado.imagen }}" width="200"><br>
+        <strong>{{ resultado.titulo }} ({{ resultado.titulo_en }})</strong><br>
+        <p>{{ resultado.descripcion }}</p>
+        <p><strong>Episodios:</strong> {{ resultado.episodios }}</p>
+        <p><strong>Géneros:</strong> {{ resultado.generos | join(', ') }}</p>
+        <p><strong>Puntaje:</strong> {{ resultado.score }} / 100</p>
+        <p><a href="{{ resultado.url }}" target="_blank">Ver en AniList</a></p>
+        {% endif %}
+
+        <!-- 🎌 Lista de favoritos -->
+        <h3>🎌 Tus animes favoritos</h3>
+        <ul>
+            {% for anime in user.favoritos %}
+            <li>
+                <img src="{{ anime.imagen }}" width="100"><br>
+                <strong>{{ anime.titulo }}</strong><br>
+                {% if anime.reseña %}
+                <em>📝 Reseña:</em> {{ anime.reseña }}<br>
+                {% endif %}
+                <form method="POST" action="/delete_favorite/{{ anime.id }}" style="display:inline;">
+                    <button type="submit">❌ Eliminar</button>
+                </form>
+                <form action="{{ url_for('edit_favorite', id=anime.id) }}" method="GET" style="display:inline;">
+                    <button type="submit">Editar reseña</button>
+                </form>
+
+            </li>
+            {% else %}
+            <li>No has agregado favoritos aún.</li>
+            {% endfor %}
+        </ul>
+
+
+
+        <p><a href="/logout">Cerrar sesión</a></p>
+    </div>
+</body>
+
+</html>

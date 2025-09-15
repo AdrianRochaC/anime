@@ -1,0 +1,21 @@
+<header>🔎 Buscar Anime</header>
+<nav>
+    <a href="{{ url_for('home') }}">Inicio</a>
+    <a href="{{ url_for('profile') }}">Perfil</a>
+    <a href="{{ url_for('feed') }}">Muro</a>
+    <a href="{{ url_for('auth.logout') }}">Cerrar sesión</a>
+</nav>
+<div class="container">
+    <h2>🔍 Buscar anime</h2>
+    <form method="POST">
+        <input type="text" name="anime" placeholder="Nombre del anime" required>
+        <button type="submit">Buscar</button>
+    </form>
+
+    {% if resultado %}
+        <h3>🎬 Resultado:</h3>
+        <p><strong>{{ resultado['titulo'] }}</strong></p>
+        <img src="{{ resultado['imagen'] }}" width="150">
+        <p>{{ resultado['descripcion'] }}</p>
+    {% endif %}
+</div>

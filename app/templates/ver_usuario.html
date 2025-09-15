@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Perfil de {{ usuario.username }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>🌸 Portal Social Otaku</header>
+    <nav>
+        <a href="{{ url_for('home') }}">Inicio</a>
+        <a href="{{ url_for('profile') }}">Mi perfil</a>
+        <a href="{{ url_for('feed') }}">Muro</a>
+        <a href="{{ url_for('auth.logout') }}">Cerrar sesión</a>
+    </nav>
+
+    <div class="container">
+        <div class="profile-header">
+            <img src="{{ usuario.avatar_url }}" class="avatar">
+            <h2>👤 Perfil de {{ usuario.username }}</h2>
+        </div>
+
+        <h3>🎌 Animes favoritos</h3>
+        <ul>
+            {% for anime in usuario.favoritos %}
+            <li>
+                <img src="{{ anime.imagen }}" width="100"><br>
+                <strong>{{ anime.titulo }}</strong><br>
+                {% if anime.reseña %}
+                <em>📝 Reseña:</em> {{ anime.reseña }}<br>
+                {% endif %}
+            </li>
+            {% else %}
+            <li>Este usuario no ha agregado favoritos aún.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

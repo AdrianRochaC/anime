@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>🧵 Muro Otaku</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <header>🌸 Portal Social Otaku</header>
+    <nav>
+        <a href="{{ url_for('home') }}">Inicio</a>
+        <a href="{{ url_for('profile') }}">Perfil</a>
+        <a href="{{ url_for('feed') }}">Muro</a>
+        <a href="{{ url_for('auth.logout') }}">Cerrar sesión</a>
+    </nav>
+
+    <div class="container">
+        <h2>🧵 Publica algo</h2>
+        <form method="POST">
+            <textarea name="contenido" rows="3" cols="60" placeholder="¿Qué estás pensando?" required></textarea><br>
+            <button type="submit">Publicar</button>
+        </form>
+
+        <h3>📢 Últimas publicaciones</h3>
+        {% for post in posts %}
+        <div class="post-card">
+            <div class="post-header">
+                <img src="{{ post.user.avatar_url }}" class="avatar">
+                <div>
+                    <strong>
+                        <a href="{{ url_for('ver_usuario', id=post.user.id) }}"
+                            style="color:#e91e63; text-decoration:none;">
+                            {{ post.user.username }}
+                        </a>
+                    </strong><br>
+
+                    <small>{{ post.timestamp.strftime('%d/%b/%Y %H:%M') }}</small>
+                </div>
+            </div>
+            <div class="post-content">
+                <p>{{ post.contenido }}</p>
+            </div>
+        </div>
+        {% else %}
+        <p>No hay publicaciones aún.</p>
+        {% endfor %}
+    </div>
+
+
+</body>
+
+</html>

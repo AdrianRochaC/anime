@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Editar reseña</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <header>🌸 Portal Social Otaku</header>
+    <nav>
+        <a href="{{ url_for('home') }}">Inicio</a>
+        <a href="{{ url_for('profile') }}">Perfil</a>
+        <a href="{{ url_for('feed') }}">Muro</a>
+        <a href="{{ url_for('auth.logout') }}">Cerrar sesión</a>
+    </nav>
+    <div class="container">
+        <h2>Editar reseña para {{ favorito.titulo }}</h2>
+        <form method="POST">
+            <textarea name="reseña" rows="5" cols="50">{{ favorito.reseña }}</textarea><br>
+            <button type="submit">Guardar cambios</button>
+        </form>
+    </div>
+    <a href="{{ url_for('profile') }}">Volver al perfil</a>
+</body>
+
+</html>
