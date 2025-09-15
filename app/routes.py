@@ -12,7 +12,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'anime-secret-key'
 import os
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
-
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Inicializar extensiones
 db.init_app(app)
@@ -30,16 +30,13 @@ def load_user(user_id):
 # Registrar blueprint de autenticación
 app.register_blueprint(auth)
 
-# Ruta principal
-from flask_login import current_user
-
 @app.route("/")
 def home():
     return render_template("home.html", user=current_user)
 
 @app.route("/init/<clave>")
 def init_db(clave):
-    if clave != "tu_clave_secreta":
+    if clave != "otaku2025":
         return "⛔ Clave incorrecta", 403
     db.create_all()
     return "✅ Base de datos creada correctamente."
