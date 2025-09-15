@@ -26,15 +26,14 @@
         {% for post in posts %}
         <div class="post-card">
             <div class="post-header">
-                <img src="{{ post.user.avatar_url }}" class="avatar">
+                <img src="{{ post.usuario.avatar_url }}" class="avatar">
                 <div>
                     <strong>
-                        <a href="{{ url_for('ver_usuario', id=post.user.id) }}"
+                        <a href="{{ url_for('ver_usuario', id=post.usuario.id) }}"
                             style="color:#e91e63; text-decoration:none;">
-                            {{ post.user.username }}
+                            {{ post.usuario.username }}
                         </a>
                     </strong><br>
-
                     <small>{{ post.timestamp.strftime('%d/%b/%Y %H:%M') }}</small>
                 </div>
             </div>
@@ -46,7 +45,6 @@
         <p>No hay publicaciones aún.</p>
         {% endfor %}
     </div>
-
 
 </body>
 
