@@ -473,3 +473,63 @@ textarea, input {
 .anime-card a:hover {
     text-decoration: underline;
 }
+
+/* 🧾 Tarjeta de formulario */
+.form-card {
+    background-color: #fff0f6;
+    border: 1px solid #f8bbd0;
+    border-radius: 12px;
+    padding: 25px;
+    max-width: 400px;
+    margin: 40px auto;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.form-card h2 {
+    color: #e91e63;
+    margin-bottom: 20px;
+}
+
+.form-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.form-card input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1em;
+}
+
+.form-card button {
+    background-color: #ff4081;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.form-card button:hover {
+    background-color: #f50057;
+}
+
+.form-card p {
+    margin-top: 15px;
+    font-size: 0.95em;
+}
+
+.form-card a {
+    color: #e91e63;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.form-card a:hover {
+    text-decoration: underline;
+}

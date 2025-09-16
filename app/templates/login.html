@@ -7,19 +7,23 @@
 </head>
 
 <body>
-    <h2>🌟 Iniciar sesión</h2>
+    <header>🌟 Iniciar sesión</header>
 
-    {% if error %}
-    <p style="color: red;">⚠️ {{ error }}</p>
-    {% endif %}
+    <div class="form-card">
+        <h2>Bienvenido de nuevo</h2>
 
-    <form method="POST">
-        <input type="text" name="username" placeholder="Nombre de usuario" required><br>
-        <input type="password" name="password" placeholder="Contraseña" required><br>
-        <button type="submit">Entrar</button>
-    </form>
+        {% if error %}
+        <p class="form-error">⚠️ {{ error }}</p>
+        {% endif %}
 
-    <p>¿No tienes cuenta? <a href="/signup">Regístrate</a></p>
+        <form method="POST">
+            <input type="text" name="username" placeholder="Nombre de usuario" required>
+            <input type="password" name="password" placeholder="Contraseña" required>
+            <button type="submit">Entrar</button>
+        </form>
+
+        <p>¿No tienes cuenta? <a href="{{ url_for('auth.signup') }}">Regístrate</a></p>
+    </div>
 </body>
 
 </html>

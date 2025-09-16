@@ -7,20 +7,24 @@
 </head>
 
 <body>
-    <h2>🌸 Registro de usuario</h2>
+    <header>🌸 Registro de usuario</header>
 
-    {% if error %}
-    <p style="color: red;">⚠️ {{ error }}</p>
-    {% endif %}
+    <div class="form-card">
+        <h2>Crea tu cuenta otaku</h2>
 
-    <form method="POST">
-        <input type="text" name="username" placeholder="Nombre de usuario" required><br>
-        <input type="password" name="password" placeholder="Contraseña" required><br>
-        <input type="text" name="avatar_url" placeholder="URL de tu avatar (opcional)">
-        <button type="submit">Registrarse</button>
-    </form>
+        {% if error %}
+        <p class="form-error">⚠️ {{ error }}</p>
+        {% endif %}
 
-    <p>¿Ya tienes cuenta? <a href="/login">Inicia sesión</a></p>
+        <form method="POST">
+            <input type="text" name="username" placeholder="Nombre de usuario" required>
+            <input type="password" name="password" placeholder="Contraseña" required>
+            <input type="text" name="avatar_url" placeholder="URL de tu avatar (opcional)">
+            <button type="submit">Registrarse</button>
+        </form>
+
+        <p>¿Ya tienes cuenta? <a href="{{ url_for('auth.login') }}">Inicia sesión</a></p>
+    </div>
 </body>
 
 </html>
