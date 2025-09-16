@@ -50,7 +50,7 @@
         <!-- 🎌 Lista de favoritos -->
         <h3>🎌 Tus animes favoritos</h3>
         <ul>
-            {% for anime in user.favoritos %}
+            {% for anime in user.animes_favoritos %}
             <li>
                 <img src="{{ anime.imagen }}" width="100"><br>
                 <strong>{{ anime.titulo }}</strong><br>
