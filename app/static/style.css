@@ -130,3 +130,29 @@ textarea, input {
     line-height: 1.5;
     padding-left: 50px;
 }
+
+.editable-field {
+    margin-bottom: 15px;
+}
+
+.editable-field label {
+    font-weight: bold;
+    display: block;
+}
+
+.editable-field span {
+    margin-right: 10px;
+}
+
+.editable-field input {
+    margin-top: 5px;
+    padding: 5px;
+    width: 80%;
+}
+
+.editable-field button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+}

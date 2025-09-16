@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from app.models import User, db, FavoriteAnime, Post # Asegúrate de importar db desde models.py
@@ -41,15 +41,6 @@ def init_db(clave):
     db.create_all()
     return "✅ Base de datos creada correctamente."
 
-
-@app.route("/profile", methods=["GET", "POST"])
-@login_required
-def profile():
-    resultado = None
-    if request.method == "POST":
-        nombre_anime = request.form.get("anime")
-        resultado = buscar_anime(nombre_anime)
-    return render_template("profile.html", user=current_user, resultado=resultado)
 
 @app.route("/add_favorite", methods=["POST"])
 @login_required
@@ -121,6 +112,33 @@ def buscar():
 def ver_usuario(id):
     usuario = User.query.get_or_404(id)
     return render_template("ver_usuario.html", usuario=usuario)
+
+@app.route("/profile", methods=["GET", "POST"])
+@login_required
+def profile():
+    resultado = None
+
+    if request.method == "POST":
+        # Si viene de edición de perfil
+        nuevo_nombre = request.form.get("username")
+        nueva_url = request.form.get("avatar_url")
+
+        if nuevo_nombre or nueva_url:
+            if nuevo_nombre and nuevo_nombre != current_user.username:
+                current_user.username = nuevo_nombre
+            if nueva_url and nueva_url != current_user.avatar_url:
+                current_user.avatar_url = nueva_url
+
+            db.session.commit()
+            flash("Perfil actualizado correctamente", "success")
+            return redirect(url_for("profile"))
+
+        # Si viene del formulario de búsqueda de anime
+        nombre_anime = request.form.get("anime")
+        if nombre_anime:
+            resultado = buscar_anime(nombre_anime)
+
+    return render_template("profile.html", user=current_user, resultado=resultado)
 
 
 
