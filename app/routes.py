@@ -30,9 +30,13 @@ def load_user(user_id):
 # Registrar blueprint de autenticación
 app.register_blueprint(auth)
 
+from app.utils import obtener_top_animes
+
 @app.route("/")
 def home():
-    return render_template("home.html", user=current_user)
+    top_animes = obtener_top_animes()
+    return render_template("home.html", user=current_user, top_animes=top_animes)
+
 
 @app.route("/init/<clave>")
 def init_db(clave):

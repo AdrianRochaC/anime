@@ -42,3 +42,15 @@ def buscar_anime(nombre):
         }
     else:
         return None
+
+import requests
+
+def obtener_top_animes():
+    url = "https://api.jikan.moe/v4/top/anime"
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            return response.json()["data"][:5]  # Top 5 animes
+    except Exception as e:
+        print("Error al obtener top animes:", e)
+    return []
