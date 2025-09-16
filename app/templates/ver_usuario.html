@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Perfil de {{ usuario.username }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
-    <header>🌸 Portal Social Otaku</header>
+    <header>🌸 Perfil público de {{ usuario.username }}</header>
     <nav>
         <a href="{{ url_for('home') }}">Inicio</a>
         <a href="{{ url_for('profile') }}">Mi perfil</a>
@@ -15,24 +17,26 @@
 
     <div class="container">
         <div class="profile-header">
-            <img src="{{ usuario.avatar_url }}" class="avatar">
-            <h2>👤 Perfil de {{ usuario.username }}</h2>
+            <img src="{{ usuario.avatar_url }}" class="avatar"><br>
+            <h2>👤 {{ usuario.username }}</h2>
+            <p>Este es el perfil público de otro usuario. Aquí puedes ver sus animes favoritos.</p>
         </div>
 
-        <h3>🎌 Animes favoritos</h3>
-        <ul>
-            {% for anime in usuario.favoritos %}
-            <li>
-                <img src="{{ anime.imagen }}" width="100"><br>
-                <strong>{{ anime.titulo }}</strong><br>
+        <h3>🎌 Animes favoritos de {{ usuario.username }}</h3>
+        <div class="favoritos-grid">
+            {% for anime in usuario.animes_favoritos %}
+            <div class="favorito-card">
+                <img src="{{ anime.imagen }}" alt="{{ anime.titulo }}">
+                <h4>{{ anime.titulo }}</h4>
                 {% if anime.reseña %}
-                <em>📝 Reseña:</em> {{ anime.reseña }}<br>
+                <p class="reseña">📝 {{ anime.reseña }}</p>
                 {% endif %}
-            </li>
+            </div>
             {% else %}
-            <li>Este usuario no ha agregado favoritos aún.</li>
+            <p class="no-favoritos">Este usuario aún no ha agregado animes favoritos.</p>
             {% endfor %}
-        </ul>
+        </div>
     </div>
 </body>
+
 </html>
