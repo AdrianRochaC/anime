@@ -14,20 +14,22 @@
         <a href="{{ url_for('feed') }}">Muro</a>
         <a href="{{ url_for('auth.logout') }}">Cerrar sesión</a>
     </nav>
+
     <div class="container">
-        <div style="text-align:center;">
-            <img src="{{ user.avatar_url }}" class="avatar" style="width:100px;"><br>
+        <div class="profile-header">
+            <img src="{{ user.avatar_url }}" class="avatar"><br>
             <h2>👤 Perfil de {{ user.username }}</h2>
+            <p>¡Bienvenido al portal social de anime!</p>
         </div>
-        <p>¡Bienvenido al portal social de anime!</p>
+
+        <!-- 🛠️ Editor de perfil -->
         <div class="profile-editor">
             <form method="POST" action="{{ url_for('profile') }}">
                 <div class="field-card">
                     <label>✏️ Nombre de usuario:</label>
                     <div class="field-content">
                         <span id="username-display">{{ user.username }}</span>
-                        <input type="text" id="username-input" name="username" value="{{ user.username }}"
-                            style="display:none;">
+                        <input type="text" id="username-input" name="username" value="{{ user.username }}" style="display:none;">
                         <button type="button" onclick="toggleEdit('username')">✏️</button>
                     </div>
                 </div>
@@ -36,8 +38,7 @@
                     <label>🖼️ Avatar URL:</label>
                     <div class="field-content">
                         <span id="avatar-display">{{ user.avatar_url }}</span>
-                        <input type="text" id="avatar-input" name="avatar_url" value="{{ user.avatar_url }}"
-                            style="display:none;">
+                        <input type="text" id="avatar-input" name="avatar_url" value="{{ user.avatar_url }}" style="display:none;">
                         <button type="button" onclick="toggleEdit('avatar')">✏️</button>
                     </div>
                 </div>
@@ -46,15 +47,14 @@
             </form>
         </div>
 
-
-
-        <!-- 🔍 Aquí va el bloque que me compartiste -->
+        <!-- 🔍 Búsqueda de anime -->
         <h3>🔍 Buscar anime</h3>
-        <form method="POST">
+        <form method="POST" class="busqueda-anime">
             <input type="text" name="anime" placeholder="Nombre del anime" required>
             <button type="submit">Buscar</button>
         </form>
 
+        <!-- 🎬 Resultado del anime -->
         {% if resultado %}
         <form method="POST" action="/add_favorite">
             <input type="hidden" name="titulo" value="{{ resultado.titulo }}">
@@ -63,61 +63,65 @@
             <button type="submit">💖 Agregar a favoritos</button>
         </form>
 
-
-        <h3>🎬 Resultado</h3>
-        <img src="{{ resultado.imagen }}" width="200"><br>
-        <strong>{{ resultado.titulo }} ({{ resultado.titulo_en }})</strong><br>
-        <p>{{ resultado.descripcion }}</p>
-        <p><strong>Episodios:</strong> {{ resultado.episodios }}</p>
-        <p><strong>Géneros:</strong> {{ resultado.generos | join(', ') }}</p>
-        <p><strong>Puntaje:</strong> {{ resultado.score }} / 100</p>
-        <p><a href="{{ resultado.url }}" target="_blank">Ver en AniList</a></p>
+        <div class="resultado-card">
+            <h3>🎬 Resultado</h3>
+            <img src="{{ resultado.imagen }}" width="200"><br>
+            <strong>{{ resultado.titulo }} ({{ resultado.titulo_en }})</strong><br>
+            <p>{{ resultado.descripcion }}</p>
+            <p><strong>Episodios:</strong> {{ resultado.episodios }}</p>
+            <p><strong>Géneros:</strong> {{ resultado.generos | join(', ') }}</p>
+            <p><strong>Puntaje:</strong> {{ resultado.score }} / 100</p>
+            <p><a href="{{ resultado.url }}" target="_blank">Ver en AniList</a></p>
+        </div>
         {% endif %}
 
-        <!-- 🎌 Lista de favoritos -->
+        <!-- 💖 Lista de favoritos -->
         <h3>🎌 Tus animes favoritos</h3>
-        <ul>
+        <div class="favoritos-grid">
             {% for anime in user.animes_favoritos %}
-            <li>
-                <img src="{{ anime.imagen }}" width="100"><br>
-                <strong>{{ anime.titulo }}</strong><br>
+            <div class="favorito-card">
+                <img src="{{ anime.imagen }}" alt="{{ anime.titulo }}">
+                <h4>{{ anime.titulo }}</h4>
                 {% if anime.reseña %}
-                <em>📝 Reseña:</em> {{ anime.reseña }}<br>
+                <p class="reseña">📝 {{ anime.reseña }}</p>
                 {% endif %}
-                <form method="POST" action="/delete_favorite/{{ anime.id }}" style="display:inline;">
-                    <button type="submit">❌ Eliminar</button>
-                </form>
-                <form action="{{ url_for('edit_favorite', id=anime.id) }}" method="GET" style="display:inline;">
-                    <button type="submit">Editar reseña</button>
-                </form>
-
-            </li>
+                <div class="botones-favorito">
+                    <form method="POST" action="/delete_favorite/{{ anime.id }}">
+                        <button class="btn-eliminar">❌ Eliminar</button>
+                    </form>
+                    <form action="{{ url_for('edit_favorite', id=anime.id) }}" method="GET">
+                        <button class="btn-editar">✏️ Editar reseña</button>
+                    </form>
+                </div>
+            </div>
             {% else %}
-            <li>No has agregado favoritos aún.</li>
+            <p class="no-favoritos">Aún no has agregado animes favoritos.</p>
             {% endfor %}
-        </ul>
-
-
+        </div>
 
         <p><a href="/logout">Cerrar sesión</a></p>
     </div>
-</body>
-<script>
-    function toggleEdit(field) {
-        const display = document.getElementById(field + '-display');
-        const input = document.getElementById(field + '-input');
 
-        if (display.style.display !== 'none') {
-            display.style.display = 'none';
-            input.style.display = 'inline-block';
-            input.focus();
-        } else {
-            display.textContent = input.value;
-            display.style.display = 'inline-block';
-            input.style.display = 'none';
+    <script>
+        function toggleEdit(field) {
+            const display = document.getElementById(field + '-display');
+            const input = document.getElementById(field + '-input');
+
+            if (display.style.display !== 'none') {
+                display.style.display = 'none';
+                input.style.display = 'inline-block';
+                input.focus();
+            } else {
+                display.textContent = input.value;
+                display.style.display = 'inline-block';
+                input.style.display = 'none';
+            }
+
+            if (field === 'avatar') {
+                document.querySelector('.avatar').src = input.value;
+            }
         }
-    }
-</script>
-
+    </script>
+</body>
 
 </html>
