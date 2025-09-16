@@ -156,3 +156,71 @@ textarea, input {
     cursor: pointer;
     font-size: 1.2em;
 }
+
+/* 👤 Editor de perfil */
+.profile-editor {
+    text-align: center;
+    margin: 30px auto;
+    padding: 20px;
+    border: 1px solid #f8bbd0;
+    border-radius: 10px;
+    background-color: #fff0f6;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    max-width: 600px;
+}
+
+/* ✏️ Campos editables */
+.editable-field {
+    margin-bottom: 20px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.editable-field label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #e91e63;
+}
+
+.editable-field span {
+    font-size: 1.1em;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.editable-field input {
+    padding: 8px;
+    width: 90%;
+    max-width: 400px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    margin-bottom: 8px;
+}
+
+.editable-field button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    color: #e91e63;
+    margin-top: -5px;
+}
+
+/* 💾 Botón guardar */
+.profile-editor button[type="submit"] {
+    background-color: #e91e63;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.profile-editor button[type="submit"]:hover {
+    background-color: #d81b60;
+}

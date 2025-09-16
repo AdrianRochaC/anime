@@ -20,25 +20,27 @@
             <h2>👤 Perfil de {{ user.username }}</h2>
         </div>
         <p>¡Bienvenido al portal social de anime!</p>
-        <form method="POST" action="{{ url_for('profile') }}">
-            <div class="editable-field">
-                <label>✏️ Nombre de usuario:</label><br>
-                <span id="username-display">{{ user.username }}</span>
-                <input type="text" id="username-input" name="username" value="{{ user.username }}"
-                    style="display:none;">
-                <button type="button" onclick="toggleEdit('username')">✏️</button>
-            </div>
+        <div class="profile-editor">
+            <form method="POST" action="{{ url_for('profile') }}">
+                <div class="editable-field">
+                    <label>✏️ Nombre de usuario:</label><br>
+                    <span id="username-display">{{ user.username }}</span>
+                    <input type="text" id="username-input" name="username" value="{{ user.username }}"
+                        style="display:none;">
+                    <button type="button" onclick="toggleEdit('username')">✏️</button>
+                </div>
 
-            <div class="editable-field">
-                <label>🖼️ Avatar URL:</label><br>
-                <span id="avatar-display">{{ user.avatar_url }}</span>
-                <input type="text" id="avatar-input" name="avatar_url" value="{{ user.avatar_url }}"
-                    style="display:none;">
-                <button type="button" onclick="toggleEdit('avatar')">✏️</button>
-            </div>
+                <div class="editable-field">
+                    <label>🖼️ Avatar URL:</label><br>
+                    <span id="avatar-display">{{ user.avatar_url }}</span>
+                    <input type="text" id="avatar-input" name="avatar_url" value="{{ user.avatar_url }}"
+                        style="display:none;">
+                    <button type="button" onclick="toggleEdit('avatar')">✏️</button>
+                </div>
 
-            <button type="submit">Guardar cambios</button>
-        </form>
+                <button type="submit">Guardar cambios</button>
+            </form>
+        </div>
 
 
         <!-- 🔍 Aquí va el bloque que me compartiste -->
